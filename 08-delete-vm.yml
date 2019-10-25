@@ -1,0 +1,14 @@
+- hosts: localhost
+  connection: local
+  vars_files:
+    - ./vars.yml
+  roles:
+    - ./modules
+
+  tasks:
+  - name: Remove a VM and all resources that were autocreated
+    azure_rm_virtualmachine:
+      resource_group: "{{ resource_group }}"
+      name: "{{ source_vm_name }}"
+      remove_on_absent: all_autocreated
+      state: absent

@@ -50,4 +50,10 @@
           publisher: Canonical
           sku: 16.04-LTS
           version: latest
+        managed_disk_type: Premium_LRS
+        os_disk_name: "{{ source_vm_name }}-osdisk"
+        os_disk_caching: ReadWrite
+      register: azure_vm
+    - debug:
+        var: azure_vm        
   
