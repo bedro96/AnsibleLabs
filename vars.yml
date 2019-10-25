@@ -2,7 +2,7 @@ resource_group: ansiblerg
 location: eastus
 virtual_network_name: ansibleVnet
 subnet_name: ServerSubnet
-ip_name: ansiblePublicIP
+ip_name: vmforimagepfxxyzpip
 source_vm_name: vmforimagepfxxyz
 network_interface_name: vmforimagepfxxyznic
 image_name: testimagea
