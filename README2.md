@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Lab 7 - Shared Image Gallery
 
 ## Summary of Lab
@@ -242,3 +243,7 @@ Virtual Network Inteface Cards Creation Task:
       absent: yes
 ```
     After this playbook competes, you can visit the Azure Portal(https://portol.azure.com) and find your image version, image and gallery being removed from your resource group.
+=======
+# AnsibleLabs
+Shared Image Gallery Test
+>>>>>>> 225ce3004dc1ad4a9aeba3ad79e1e3cf1864fce1
