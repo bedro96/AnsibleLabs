@@ -17,7 +17,7 @@
     - name: Create a snapshot by importing an unmanaged blob from the same subscription.
       azure_rm_snapshot:
         resource_group: "{{ resource_group }}"
-        name: mySnapshot
+        name: "{{ snapshot_name }}"
         location: "{{ location }}"
         creation_data:
           create_option: Import

@@ -1,8 +1,8 @@
-resource_group: zimstgmoo
+resource_group: ansiblerg
 location: eastus
-virtual_network_name: testVnet
-subnet_name: testSubnet
-ip_name: testPublicIP
+virtual_network_name: ansibleVnet
+subnet_name: ServerSubnet
+ip_name: ansiblePublicIP
 source_vm_name: vmforimagepfxxyz
 network_interface_name: vmforimagepfxxyznic
 image_name: testimagea
