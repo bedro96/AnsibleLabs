@@ -36,6 +36,9 @@
             - name: "{{ location }}"
               regional_replica_count: 1
               storage_account_type: Standard_ZRS
+            - name: "westus"
+              regional_replica_count: 1
+              storage_account_type: Standard_ZRS
           snapshot:
             name: "{{ snapshot_name }}"
             resource_group: "{{ resource_group }}"
