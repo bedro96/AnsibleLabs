@@ -40,7 +40,6 @@
           name: "{{ network_interface_name}}-private"
           private_ip_allocation_method: "Dynamic"
           public_ip_address_name: "{{ ip_name }}"
-          
 
     - name: Create VM
       azure_rm_virtualmachine:
