@@ -30,7 +30,7 @@
         allocation_method: Static
         name: "{{ ip_name }}"
 
-    - name: Create virtual network inteface cards for VM A and B
+    - name: Create virtual network inteface cards for VM with ip_configurations.
       azure_rm_networkinterface:
         resource_group: "{{ resource_group }}"
         name: "{{ network_interface_name }}"
