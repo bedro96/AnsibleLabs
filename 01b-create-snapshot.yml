@@ -14,13 +14,13 @@
     - debug:
         var: output
 
-    - name: Get facts for one managed disk
-      azure_rm_managed_disk_facts:
-        name: "{{ source_vm_name }}-osdisk"
-        resource_group: "{{ resource_group }}"
-      register: output
-    - debug:
-        var: output
+    # - name: Get facts for one managed disk
+    #   azure_rm_managed_disk_facts:
+    #     name: "{{ source_vm_name }}-osdisk"
+    #     resource_group: "{{ resource_group }}"
+    #   register: output
+    # - debug:
+    #     var: output
 
     - name: Create a snapshot by importing an unmanaged blob from the same subscription.
       azure_rm_snapshot:
