@@ -38,7 +38,7 @@
         subnet: "{{ subnet_name }}"
         ip_configurations:
           - name: ipconfig1
-            public_ip_address_name: publicip001
+            public_ip_address_name: "{{ ip_name }}"
             primary: True
 
     - name: Create VM
