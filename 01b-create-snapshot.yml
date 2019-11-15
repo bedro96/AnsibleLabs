@@ -1,3 +1,7 @@
+# https://github.com/Azure/azure_preview_modules
+# We’ve finished feature 1-3. Now azure_rm_snapshot can support managed disk as a creation source. 
+# The code has been merged into Ansible dev branch and azure_preview_module.
+
 - hosts: localhost
   connection: local
   vars_files:

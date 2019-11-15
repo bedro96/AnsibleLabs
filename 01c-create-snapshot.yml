@@ -1,0 +1,36 @@
+- hosts: localhost
+  connection: local
+  vars_files:
+    - ./vars.yml
+  roles:
+    - ./modules
+
+  tasks:
+    - name: Get VM information
+      azure_rm_virtualmachine_facts:
+        resource_group: "terraformvmrg"
+        name: "ubuntu1604427"
+      register: output
+    - debug:
+        var: output
+
+    # - name: Get facts for one managed disk
+    #   azure_rm_managed_disk_facts:
+    #     name: "{{ source_vm_name }}-osdisk"
+    #     resource_group: "{{ resource_group }}"
+    #   register: output
+    # - debug:
+    #     var: output
+
+    - name: Create a snapshot by importing a managed disk from the same subscription.
+      azure_rm_snapshot:
+        resource_group: "terraformvmrg"
+        name: "terraformvm_snapshot"
+        location: "southeastasia"
+        creation_data:
+          create_option: Copy
+          source_id: "/subscriptions/05be085b-86ea-4336-addc-38fd56051a9e/resourceGroups/TERRAFORMVMRG/providers/Microsoft.Compute/disks/ubuntu1604427-osdisk"
+      register: output
+    - debug:
+        var: output
+  
