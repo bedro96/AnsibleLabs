@@ -244,6 +244,20 @@ Virtual Network Inteface Cards Creation Task:
 ```
     After this playbook competes, you can visit the Azure Portal(https://portol.azure.com) and find your image version, image and gallery being removed from your resource group.
 =======
-# AnsibleLabs
-Shared Image Gallery Test
->>>>>>> 225ce3004dc1ad4a9aeba3ad79e1e3cf1864fce1
+# Samsung Demo
+
+## updated modules
+/modules/library/azure_rm_snapshot.py
+/module_utils/azure_rm_common_ext.py
+## Procedure
+1. Create a VM from terraform 
+2. Chroot and create a snapshot
+3. Create a Resource Group
+```sh
+ansible-playbook 00c-prerequisites.yml
+```
+4. Create a shared image gallery
+```sh
+ansible-playbook 02-create-shared-image-gallery.yml
+```
+

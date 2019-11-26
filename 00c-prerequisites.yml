@@ -1,0 +1,14 @@
+- hosts: localhost
+  connection: local
+  vars_files:
+    - ./vars.yml
+  roles:
+    - ./modules
+
+  tasks:
+    - name: Create resource group if doesn't exist
+      azure_rm_resourcegroup:
+        name: "{{ resource_group }}"
+        location: "{{ location }}"
+  
+  
