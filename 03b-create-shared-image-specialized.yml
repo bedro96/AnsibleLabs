@@ -34,11 +34,11 @@
           storage_account_type: Standard_LRS
           target_regions:
             - name: "{{ location }}"
-              regional_replica_count: 1
+              regional_replica_count: 2
               storage_account_type: Standard_ZRS
             - name: "westus"
               regional_replica_count: 1
-              storage_account_type: Standard_ZRS
+              storage_account_type: Standard_LRS
           snapshot:
             name: "{{ snapshot_name }}"
             resource_group: "{{ resource_group }}"

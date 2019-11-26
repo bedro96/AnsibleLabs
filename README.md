@@ -250,13 +250,31 @@ Virtual Network Inteface Cards Creation Task:
 /modules/library/azure_rm_snapshot.py
 /module_utils/azure_rm_common_ext.py
 ## Procedure
-1. Create a VM from terraform 
+1. Create a VM from terraform
+2. SSH into the VM and git clone
+```sh
+git clone https://github.com/bedro96/chroot.git
+sudo apt install unzip
+unzip packer_1.4.5_linux_amd64.zip
+```
+3. update init_chroot.sh, sudo su, source the init_chroot.sh
+```sh
+sudo su
+source init_chroot.sh
+packer build exampleNetPlanSan_Daniel_Sol.json
+```
+4. 
 2. Chroot and create a snapshot
 3. Create a Resource Group
 ```sh
 ansible-playbook 00c-prerequisites.yml
 ```
-4. Create a shared image gallery
+4. Create a snapshot from the disk
+```sh
+ansible-
+```
+
+5. Create a shared image gallery
 ```sh
 ansible-playbook 02-create-shared-image-gallery.yml
 ```
