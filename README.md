@@ -9,8 +9,8 @@ This Lab Exercise will assume that:
 
 ## Updated modules
 Following files have been updated to support azure snapshot from managed disk.
-/modules/library/azure_rm_snapshot.py
-/module_utils/azure_rm_common_ext.py
+- /modules/library/azure_rm_snapshot.py
+- /module_utils/azure_rm_common_ext.py
 
 ## Procedure
 1. Create a VM from terraform
