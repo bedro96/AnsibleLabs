@@ -20,7 +20,7 @@ Following git is private. please contact for access.
 https://github.com/bedro96/terraform/blob/master/ubuntuvmpacker/ubuntusing_packer_vm.tf
 ```
 
-2. SSH into the VM and git clone
+2. SSH into the VM and git clone to set up packer
 
 ```sh
 git clone https://github.com/bedro96/chroot.git
@@ -29,6 +29,7 @@ unzip packer_1.4.5_linux_amd64.zip
 sudo cp packer /usr/bin
 ```
 vi init_chroot.sh and update ARM_SOURCE_DISK_RESOURCE_ID
+
 3. Update init_chroot.sh, sudo su, source the init_chroot.sh
 
 ```sh
