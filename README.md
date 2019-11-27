@@ -1,22 +1,24 @@
-<<<<<<< HEAD
-# Lab 7 - Shared Image Gallery
+# Specialized Image in Shared Image Gallery demo with azure-chroot
 
 ## Summary of Lab
-In this exercise you will create a virtual machine using the shared image that you create. Initially, we will start by creating a custom image. Then, we will create shared image gallery and create shared image into this gallery. Finally, we will create a virtual machine using the shared image.
+In this exercise you will create a virtual machine using the shared image that you create. Initially, we will start by creating a managed disk. Then, we will create a snapshot from this managed disk. Finally, shared image gallery and create shared image into this gallery. For verification, we will create a virtual machine and a VMSS using the shared image to review that the credential has been kept intact, and has no issue with name resolution.  
 
 ## Pre-Requisites
 This Lab Exercise will assume that:
     You have added your Resource Group ID, Location, Source VM Name, Image Name, Shared Gallery Name, Shared Image Name, Shared Image Version and VM Name to the vars.yml file prior to executing this lab.
 
-
-=======
-# Samsung Demo
-
-## updated modules
+## Updated modules
+Following files have been updated to support azure snapshot from managed disk.
 /modules/library/azure_rm_snapshot.py
 /module_utils/azure_rm_common_ext.py
+
 ## Procedure
 1. Create a VM from terraform
+Following git is private. please contact for access.
+```sh
+https://github.com/bedro96/terraform/blob/master/ubuntuvmpacker/ubuntusing_packer_vm.tf
+```
+
 2. SSH into the VM and git clone
 ```sh
 git clone https://github.com/bedro96/chroot.git
