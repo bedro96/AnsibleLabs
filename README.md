@@ -24,6 +24,7 @@ sudo apt install unzip
 unzip packer_1.4.5_linux_amd64.zip
 sudo cp packer /usr/bin
 ```
+vi init_chroot.sh and update ARM_SOURCE_DISK_RESOURCE_ID
 3. Update init_chroot.sh, sudo su, source the init_chroot.sh
 ```sh
 sudo su
@@ -51,4 +52,7 @@ ansible-playbook 03b-create-shared-image-specialized.yml
 ```sh
 ansible-playbook 04b-create-vm-using-specialized-image.yml
 ```
-8. Create a 
+8. Create a VMSS from specialized image and check if you can ssh into the machine
+```sh
+ansible-playbook 05b-create-vmss-using-specialized-image.yml
+```
