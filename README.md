@@ -24,6 +24,7 @@ https://github.com/bedro96/terraform/blob/master/ubuntuvmpacker/ubuntusing_packe
 
 ```sh
 git clone https://github.com/bedro96/chroot.git
+cd chroot
 sudo apt install unzip
 unzip packer_1.4.5_linux_amd64.zip
 sudo cp packer /usr/bin
