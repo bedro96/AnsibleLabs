@@ -22,9 +22,7 @@ class AzureRMModuleBaseExt(AzureRMModuleBase):
                 if spec[name].get('purgeIfNone', False):
                     body.pop(name, None)
                 continue
-            # check if pattern needs to be used
-            pattern = spec[name].get('pattern', None)
-            if pattern:
+            if pattern := spec[name].get('pattern', None):
                 if pattern == 'camelize':
                     param = _snake_to_camel(param, True)
                 else:
@@ -80,7 +78,7 @@ class AzureRMModuleBaseExt(AzureRMModuleBase):
 
         # check if any extra values passed
         for k in value_dict:
-            if not ('{' + k + '}') in pattern:
+            if '{' + k + '}' not in pattern:
                 return None
         # format url
         return pattern.format(**value_dict)
@@ -144,7 +142,7 @@ class AzureRMModuleBaseExt(AzureRMModuleBase):
         elif isinstance(new, dict):
             comparison_result = True
             if not isinstance(old, dict):
-                result['compare'].append('changed [' + path + '] old dict is null')
+                result['compare'].append(f'changed [{path}] old dict is null')
                 comparison_result = False
             else:
                 for k in set(new.keys()) | set(old.keys()):
@@ -153,14 +151,18 @@ class AzureRMModuleBaseExt(AzureRMModuleBase):
                     if new_item is None:
                         if isinstance(old_item, dict):
                             new[k] = old_item
-                            result['compare'].append('new item was empty, using old [' + path + '][ ' + k + ' ]')
-                    elif not self.default_compare(modifiers, new_item, old_item, path + '/' + k, result):
+                            result['compare'].append(f'new item was empty, using old [{path}][ {k} ]')
+                    elif not self.default_compare(
+                        modifiers, new_item, old_item, f'{path}/{k}', result
+                    ):
                         comparison_result = False
             return comparison_result
         elif isinstance(new, list):
             comparison_result = True
             if not isinstance(old, list) or len(new) != len(old):
-                result['compare'].append('changed [' + path + '] length is different or old value is null')
+                result['compare'].append(
+                    f'changed [{path}] length is different or old value is null'
+                )
                 comparison_result = False
             else:
                 if isinstance(old[0], dict):
@@ -177,7 +179,9 @@ class AzureRMModuleBaseExt(AzureRMModuleBase):
                     new = sorted(new)
                     old = sorted(old)
                 for i in range(len(new)):
-                    if not self.default_compare(modifiers, new[i], old[i], path + '/*', result):
+                    if not self.default_compare(
+                        modifiers, new[i], old[i], f'{path}/*', result
+                    ):
                         comparison_result = False
             return comparison_result
         else:
@@ -185,7 +189,7 @@ class AzureRMModuleBaseExt(AzureRMModuleBase):
             comparison = modifiers.get(path, {}).get('comparison', 'default')
             if comparison == 'ignore':
                 return True
-            elif comparison == 'default' or comparison == 'sensitive':
+            elif comparison in ['default', 'sensitive']:
                 if isinstance(old, string_types) and isinstance(new, string_types):
                     new = new.lower()
                     old = old.lower()
@@ -193,12 +197,14 @@ class AzureRMModuleBaseExt(AzureRMModuleBase):
                 if isinstance(old, string_types) and isinstance(new, string_types):
                     new = new.replace(' ', '').lower()
                     old = old.replace(' ', '').lower()
-            if str(new) != str(old):
-                result['compare'].append('changed [' + path + '] ' + str(new) + ' != ' + str(old) + ' - ' + str(comparison))
-                if updatable:
-                    return False
-                else:
-                    self.module.warn("property '" + path + "' cannot be updated (" + str(old) + "->" + str(new) + ")")
-                    return True
-            else:
+            if str(new) == str(old):
                 return True
+            result['compare'].append(
+                f'changed [{path}] {str(new)} != {str(old)} - {str(comparison)}'
+            )
+            if updatable:
+                return False
+            self.module.warn(
+                f"property '{path}' cannot be updated ({str(old)}->{str(new)})"
+            )
+            return True

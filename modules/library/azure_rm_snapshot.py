@@ -224,11 +224,8 @@ class AzureRMSnapshots(AzureRMModuleBaseExt):
         self.to_do = Actions.NoAction
 
         self.body = {}
-        self.query_parameters = {}
-        self.query_parameters['api-version'] = '2018-09-30'
-        self.header_parameters = {}
-        self.header_parameters['Content-Type'] = 'application/json; charset=utf-8'
-
+        self.query_parameters = {'api-version': '2018-09-30'}
+        self.header_parameters = {'Content-Type': 'application/json; charset=utf-8'}
         super(AzureRMSnapshots, self).__init__(derived_arg_spec=self.module_arg_spec,
                                                supports_check_mode=True,
                                                supports_tags=True)
@@ -288,7 +285,7 @@ class AzureRMSnapshots(AzureRMModuleBaseExt):
                 if not self.default_compare(modifiers, self.body, old_response, '', self.results):
                     self.to_do = Actions.Update
 
-        if (self.to_do == Actions.Create) or (self.to_do == Actions.Update):
+        if self.to_do in [Actions.Create, Actions.Update]:
             self.log('Need to Create / Update the Snapshot instance')
 
             if self.check_mode:
@@ -377,10 +374,7 @@ class AzureRMSnapshots(AzureRMModuleBaseExt):
             # self.log("Snapshot instance : {0} found".format(response.name))
         except CloudError as e:
             self.log('Did not find the Snapshot instance.')
-        if found is True:
-            return response
-
-        return False
+        return response if found else False
 
 
 def main():
