@@ -296,11 +296,8 @@ class AzureRMGalleryImageVersions(AzureRMModuleBaseExt):
         self.to_do = Actions.NoAction
 
         self.body = {}
-        self.query_parameters = {}
-        self.query_parameters['api-version'] = '2019-07-01'
-        self.header_parameters = {}
-        self.header_parameters['Content-Type'] = 'application/json; charset=utf-8'
-
+        self.query_parameters = {'api-version': '2019-07-01'}
+        self.header_parameters = {'Content-Type': 'application/json; charset=utf-8'}
         super(AzureRMGalleryImageVersions, self).__init__(derived_arg_spec=self.module_arg_spec,
                                                           supports_check_mode=True,
                                                           supports_tags=True)
@@ -369,11 +366,14 @@ class AzureRMGalleryImageVersions(AzureRMModuleBaseExt):
         snapshot = self.body.get('properties', {}).get('publishingProfile', {}).pop('snapshot', None)
         if snapshot is not None:
             self.body['properties'].setdefault('storageProfile', {}).setdefault('osDiskImage', {}).setdefault('source', {})['id'] = snapshot
-        managed_image = self.body.get('properties', {}).get('publishingProfile', {}).pop('managed_image', None)
-        if managed_image:
+        if (
+            managed_image := self.body.get('properties', {})
+            .get('publishingProfile', {})
+            .pop('managed_image', None)
+        ):
             self.body['properties'].setdefault('storageProfile', {}).setdefault('source', {})['id'] = managed_image
 
-        if (self.to_do == Actions.Create) or (self.to_do == Actions.Update):
+        if self.to_do in [Actions.Create, Actions.Update]:
             self.log('Need to Create / Update the GalleryImageVersion instance')
 
             if self.check_mode:
@@ -463,10 +463,7 @@ class AzureRMGalleryImageVersions(AzureRMModuleBaseExt):
             # self.log("AzureFirewall instance : {0} found".format(response.name))
         except CloudError as e:
             self.log('Did not find the AzureFirewall instance.')
-        if found is True:
-            return response
-
-        return False
+        return response if found else False
 
 
 def main():

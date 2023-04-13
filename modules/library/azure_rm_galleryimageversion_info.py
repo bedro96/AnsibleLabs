@@ -155,11 +155,8 @@ class AzureRMGalleryImageVersionsInfo(AzureRMModuleBase):
         self.url = None
         self.status_code = [200]
 
-        self.query_parameters = {}
-        self.query_parameters['api-version'] = '2019-03-01'
-        self.header_parameters = {}
-        self.header_parameters['Content-Type'] = 'application/json; charset=utf-8'
-
+        self.query_parameters = {'api-version': '2019-03-01'}
+        self.header_parameters = {'Content-Type': 'application/json; charset=utf-8'}
         self.mgmt_client = None
         super(AzureRMGalleryImageVersionsInfo, self).__init__(self.module_arg_spec, supports_tags=False)
 
@@ -171,15 +168,15 @@ class AzureRMGalleryImageVersionsInfo(AzureRMModuleBase):
         self.mgmt_client = self.get_mgmt_svc_client(GenericRestClient,
                                                     base_url=self._cloud_environment.endpoints.resource_manager)
 
-        if (self.resource_group is not None and
-                self.gallery_name is not None and
-                self.gallery_image_name is not None and
-                self.name is not None):
-            self.results['versions'] = self.get()
-        elif (self.resource_group is not None and
-              self.gallery_name is not None and
-              self.gallery_image_name is not None):
-            self.results['versions'] = self.listbygalleryimage()
+        if (
+            self.resource_group is not None
+            and self.gallery_name is not None
+            and self.gallery_image_name is not None
+        ):
+            if self.name is not None:
+                self.results['versions'] = self.get()
+            else:
+                self.results['versions'] = self.listbygalleryimage()
         return self.results
 
     def get(self):
@@ -257,15 +254,14 @@ class AzureRMGalleryImageVersionsInfo(AzureRMModuleBase):
         return [self.format_item(x) for x in results['value']] if results['value'] else []
 
     def format_item(self, item):
-        d = {
+        return {
             'id': item['id'],
             'name': item['name'],
             'location': item['location'],
             'tags': item.get('tags'),
             'publishing_profile': item['properties']['publishingProfile'],
-            'provisioning_state': item['properties']['provisioningState']
+            'provisioning_state': item['properties']['provisioningState'],
         }
-        return d
 
 
 def main():

@@ -378,11 +378,8 @@ class AzureRMGalleryImages(AzureRMModuleBaseExt):
         self.to_do = Actions.NoAction
 
         self.body = {}
-        self.query_parameters = {}
-        self.query_parameters['api-version'] = '2019-07-01'
-        self.header_parameters = {}
-        self.header_parameters['Content-Type'] = 'application/json; charset=utf-8'
-
+        self.query_parameters = {'api-version': '2019-07-01'}
+        self.header_parameters = {'Content-Type': 'application/json; charset=utf-8'}
         super(AzureRMGalleryImages, self).__init__(derived_arg_spec=self.module_arg_spec,
                                                    supports_check_mode=True,
                                                    supports_tags=True)
@@ -444,7 +441,7 @@ class AzureRMGalleryImages(AzureRMModuleBaseExt):
                 if not self.default_compare(modifiers, self.body, old_response, '', self.results):
                     self.to_do = Actions.Update
 
-        if (self.to_do == Actions.Create) or (self.to_do == Actions.Update):
+        if self.to_do in [Actions.Create, Actions.Update]:
             self.log('Need to Create / Update the GalleryImage instance')
 
             if self.check_mode:
@@ -539,10 +536,7 @@ class AzureRMGalleryImages(AzureRMModuleBaseExt):
             # self.log("AzureFirewall instance : {0} found".format(response.name))
         except CloudError as e:
             self.log('Did not find the AzureFirewall instance.')
-        if found is True:
-            return response
-
-        return False
+        return response if found else False
 
 
 def main():

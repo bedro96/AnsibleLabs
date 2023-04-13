@@ -127,11 +127,8 @@ class AzureRMGalleriesInfo(AzureRMModuleBase):
         self.url = None
         self.status_code = [200]
 
-        self.query_parameters = {}
-        self.query_parameters['api-version'] = '2019-03-01'
-        self.header_parameters = {}
-        self.header_parameters['Content-Type'] = 'application/json; charset=utf-8'
-
+        self.query_parameters = {'api-version': '2019-03-01'}
+        self.header_parameters = {'Content-Type': 'application/json; charset=utf-8'}
         self.mgmt_client = None
         super(AzureRMGalleriesInfo, self).__init__(self.module_arg_spec, supports_tags=False)
 
@@ -244,15 +241,14 @@ class AzureRMGalleriesInfo(AzureRMModuleBase):
         return [self.format_item(x) for x in results['value']] if results['value'] else []
 
     def format_item(self, item):
-        d = {
+        return {
             'id': item['id'],
             'name': item['name'],
             'location': item['location'],
             'tags': item.get('tags'),
             'description': item['properties']['description'],
-            'provisioning_state': item['properties']['provisioningState']
+            'provisioning_state': item['properties']['provisioningState'],
         }
-        return d
 
 
 def main():

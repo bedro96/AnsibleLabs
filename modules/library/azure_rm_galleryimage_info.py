@@ -162,11 +162,8 @@ class AzureRMGalleryImagesInfo(AzureRMModuleBase):
         self.url = None
         self.status_code = [200]
 
-        self.query_parameters = {}
-        self.query_parameters['api-version'] = '2019-03-01'
-        self.header_parameters = {}
-        self.header_parameters['Content-Type'] = 'application/json; charset=utf-8'
-
+        self.query_parameters = {'api-version': '2019-03-01'}
+        self.header_parameters = {'Content-Type': 'application/json; charset=utf-8'}
         self.mgmt_client = None
         super(AzureRMGalleryImagesInfo, self).__init__(self.module_arg_spec, supports_tags=False)
 
@@ -178,15 +175,13 @@ class AzureRMGalleryImagesInfo(AzureRMModuleBase):
         self.mgmt_client = self.get_mgmt_svc_client(GenericRestClient,
                                                     base_url=self._cloud_environment.endpoints.resource_manager)
 
-        if (self.resource_group is not None and
-                self.gallery_name is not None and
-                self.name is not None):
-            # self.results['gallery_images'] = self.format_item(self.get())
-            self.results['images'] = self.get()
-        elif (self.resource_group is not None and
-              self.gallery_name is not None):
-            # self.results['gallery_images'] = self.format_item(self.listbygallery())
-            self.results['images'] = self.listbygallery()
+        if self.resource_group is not None and self.gallery_name is not None:
+            if self.name is not None:
+                # self.results['gallery_images'] = self.format_item(self.get())
+                self.results['images'] = self.get()
+            else:
+                # self.results['gallery_images'] = self.format_item(self.listbygallery())
+                self.results['images'] = self.listbygallery()
         return self.results
 
     def get(self):
@@ -258,16 +253,15 @@ class AzureRMGalleryImagesInfo(AzureRMModuleBase):
         return [self.format_item(x) for x in results['value']] if results['value'] else []
 
     def format_item(self, item):
-        d = {
+        return {
             'id': item['id'],
             'name': item['name'],
             'location': item['location'],
             'tags': item.get('tags'),
             'os_state': item['properties']['osState'],
             'os_type': item['properties']['osType'],
-            'identifier': item['properties']['identifier']
+            'identifier': item['properties']['identifier'],
         }
-        return d
 
 
 def main():
